@@ -7,12 +7,13 @@ import (
 	"strconv"
 )
 
-func CreateDeckSheet(r render.Render, params martini.Params, req *http.Request) {
+func CreateDeckSheet(r render.Render, params martini.Params, w http.ResponseWriter, req *http.Request) {
 	id, _ := strconv.Atoi(params["id"])
 	var deck = GetDeckByVault(id, req)
 	if deck.HyperSpatial == nil || deck.MainDeck == nil {
 		r.JSON(400, "badRequest")
 	} else {
+		GenerateDeckSheet(w, req)
 		r.JSON(200, deck)
 	}
 }

@@ -13,6 +13,7 @@ func init() {
 	m.Use(render.Renderer())
 
 	m.Get("/api/deck/:id", CreateDeckSheet)
+	m.Get("/api/pdf", GenerateDeckSheet)
 
 	http.ListenAndServe(":8080", m)
 	http.Handle("/", m)
