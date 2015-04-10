@@ -1,36 +1,25 @@
 package dragonar
 
 import (
-	"github.com/mawicks/PDFiG/pdf"
-	"os"
+	"github.com/signintech/gopdf"
+	"github.com/signintech/gopdf/fonts"
+	"log"
+	"net/http"
 )
 
-func GenerateDeckSheet() {
-	f, _, _ := pdf.OpenFile("/img/decksheet.pdf", os.O_RDWR|os.O_CREATE)
+func GenerateDeckSheet(w http.ResponseWriter) {
+	pdf := gopdf.GoPdf{}
+	pdf.Start(gopdf.Config{Unit: "pt", PageSize: gopdf.Rect{W: 595.28, H: 841.89}}) //A4
+	pdf.AddFont("THSarabunPSK", new(fonts.THSarabun), "THSarabun.z")
+	pdf.AddFont("Loma", new(fonts.Loma), "Loma.z")
+	pdf.AddPage()
+	log.Println(pdf.GetY())
+	pdf.Image("static/img/decksheet.jpg", 0, 0, nil)
+	pdf.SetFont("THSarabunPSK", "B", 14)
+	pdf.Cell(nil, "Hello world  = สวัสดี โลก in thai")
+	pdf.Br(44)
+	pdf.Cell(nil, "Hello world  = สวัสดี โลก in thai")
 
-	o1 := pdf.NewIndirect()
-	indirect1 := f.WriteObject(o1)
-	o1.Write(pdf.NewNumeric(3.14))
-
-	indirect2 := f.WriteObject(pdf.NewNumeric(2.718))
-
-	f.WriteObject(pdf.NewName("foo"))
-
-	// Delete the *indirect reference* to the 3.14 numeric
-	f.DeleteObject(indirect1)
-	f.WriteObject(pdf.NewNumeric(3))
-
-	// Delete the 2.718 numeric object itself
-	f.DeleteObject(indirect2)
-
-	p := pdf.NewPageFactory().New(f)
-	p.SetParent(indirect1)
-	p.SetMediaBox(0, 0, 612, 792)
-	p.Finish()
-
-	catalog := pdf.NewDictionary()
-	catalog.Add("Type", pdf.NewName("Catalog"))
-	f.SetCatalog(catalog)
-
-	f.Close()
+	w.Header().Set("Content-type", "application/pdf")
+	w.Write(pdf.GetBytesPdf())
 }

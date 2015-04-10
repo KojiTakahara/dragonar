@@ -13,7 +13,6 @@ func CreateDeckSheet(r render.Render, params martini.Params, w http.ResponseWrit
 	if deck.HyperSpatial == nil || deck.MainDeck == nil {
 		r.JSON(400, "badRequest")
 	} else {
-		GenerateDeckSheet(w, req)
 		r.JSON(200, deck)
 	}
 }
