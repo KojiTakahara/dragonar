@@ -7,10 +7,10 @@
     <packaging>war</packaging>
     <version>1.0</version>
 
-    <groupId>com.google.appengine.demos</groupId>
-    <artifactId>appengine-try-java</artifactId>
+    <groupId>com.google.appengine</groupId>
+    <artifactId>decksheet-api</artifactId>
 
-        <pluginRepositories>
+    <pluginRepositories>
         <pluginRepository>
             <id>google-staging</id>
             <name>Google Staging</name>
@@ -82,7 +82,7 @@
     </dependencies>
       
     <build>
-        <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory> 
+        <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory>
                                    
         <plugins>
             <plugin>
