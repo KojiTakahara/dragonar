@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="appengine-try-java:war exploded">
+    <output-path>$PROJECT_DIR$/target/appengine-try-java-1.0</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="appengine-try-java/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="appengine-try-java" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.google.appengine:appengine-api-1.0-sdk:1.9.0" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.5" />
+          <element id="library" level="project" name="Maven: com.itextpdf:itext-asian:5.2.0" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

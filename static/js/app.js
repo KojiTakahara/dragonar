@@ -8,7 +8,7 @@ app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.generateDeckSheet = function() {
 
     var hyperSpatial = [], mainDeck = [];
-    
+
     for (var i = 0; i < 40; i++) {
       mainDeck.push('熱血龍 ドロドロ・ゲキカレーカラ・カレパン');
     }
@@ -28,12 +28,6 @@ app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
       data: toQueryString(data)
     }).success(function(data, status, headers, config) {
       console.info(data);
-      var file = new Blob([data], {type: 'application/pdf'});
-      var fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
-    }).error(function(data, status, headers, config) {
-      console.log(data);
-    });
   };
 
 }]);
