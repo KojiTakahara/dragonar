@@ -15,18 +15,14 @@ public class GenerateDMSheet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        // get parameter
-        String[] mainDeck = request.getParameterValues("mainDeck");
-        String[] hyperSpatial = request.getParameterValues("hyperSpatial");
-        String playerName = request.getParameter("playerName");
-        if (hyperSpatial == null) {
-            hyperSpatial = new String[]{};
-        }
         // validate
-        if (!validate(mainDeck, hyperSpatial, playerName)) {
+        if (!validate(request)) {
             setBadRequestResponse(response);
             return;
         }
+
+        String[] mainDeck = request.getParameter("mainDeck").split(",");
+        String[] hyperSpatial = request.getParameter("hyperSpatial").split(",");
 
         try {
             PdfReader reader = new PdfReader("decksheet.pdf");
@@ -82,13 +78,15 @@ public class GenerateDMSheet extends HttpServlet {
         return 12;
     }
 
-    private boolean validate(String[] mainDeck, String[] hyperSpatial, String playerName) {
-        System.out.println(mainDeck);
-        System.out.println(playerName);
-        if (mainDeck == null || playerName == null || playerName == "") {
+    private boolean validate(HttpServletRequest request) {
+        String mainDeckStr = request.getParameter("mainDeck");
+        String hyperSpatialStr = request.getParameter("hyperSpatial");
+        String playerName = request.getParameter("playerName");
+        if (mainDeckStr == null || mainDeckStr == "" || playerName == null || playerName == "") {
             return false;
         }
-
+        String[] mainDeck = mainDeckStr.split(",");
+        String[] hyperSpatial = hyperSpatialStr.split(",");
         if (mainDeck.length != 40) {
             return false;
         }

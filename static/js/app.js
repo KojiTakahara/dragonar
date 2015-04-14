@@ -6,28 +6,38 @@ var app = angular.module('app', [
 app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
 
   $scope.generateDeckSheet = function() {
-
-    var hyperSpatial = [], mainDeck = [];
-
-    for (var i = 0; i < 40; i++) {
-      mainDeck.push('熱血龍 ドロドロ・ゲキカレーカラ・カレパン');
-    }
-    hyperSpatial.push('奮戦の精霊龍 デコデッコ・デコリアーヌ・ピッカピカⅢ世');
-    hyperSpatial.push('アクア・カスケード〈ZABUUUN・クルーザー〉');
-
-
-    var data = {
-      playerName: 'test',
-      mainDeck: mainDeck,
-      hyperSpatial: hyperSpatial
-    };
-
-    $http({
-      method: 'POST',
-      url: 'http://localhost:9090/dmSheet',
-      data: toQueryString(data)
-    }).success(function(data, status, headers, config) {
-      console.info(data);
+    $scope.process = true;
+    $http.get('/api/deck/1075015').success(function(data) {
+      var params = {
+        mainDeck: '',
+        hyperSpatial: '',
+        playerName: 'test'
+      };
+      for (var i = 0; i < data.HyperSpatial.length; i++) {
+        if (i != 0) {
+          params.hyperSpatial += ",";
+        }
+        params.hyperSpatial += data.HyperSpatial[i];
+      }
+      for (var i = 0; i < data.MainDeck.length; i++) {
+        if (i != 0) {
+          params.mainDeck += ",";
+        }
+        params.mainDeck += data.MainDeck[i];
+      }
+      $http({
+        method: 'POST',
+        url: 'http://localhost:9090/dmSheet',
+        data: $.param(params)
+      }).success(function(data, status, headers, config) {
+        // var file = new Blob([data], {type: 'application/pdf'});
+        // var fileURL = URL.createObjectURL(file);
+        // //window.open(fileURL);
+        // var base64EncodedPDF = System.Convert.ToBase64String(data);
+        // window.open("data:application/pdf," + base64EncodedPDF);
+        // $scope.process = false;
+      });
+    });
   };
 
 }]);
