@@ -28,12 +28,16 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
         }
         params.mainDeck += data.MainDeck[i];
       }
-      $http.post('http://localhost:9090/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
+      $http.post('http://decksheet-api.appspot.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
         var file = new Blob([data], {type: 'application/pdf'}),
             fileURL = URL.createObjectURL(file);
         $window.open($sce.trustAsResourceUrl(fileURL));
         $scope.process = false;
+      }).error(function(data, status, headers, config) {
+        $scope.process = false;
       });
+    }).error(function(data, status, headers, config) {
+      $scope.process = false;
     });
   };
 

@@ -4,6 +4,8 @@
     <version>1</version>
     <threadsafe>true</threadsafe>
     <static-files>
-        <include path="/**.pdf" />
+        <include path="/**">
+            <http-header name="Access-Control-Allow-Origin" value="*" />
+        </include>
     </static-files>
 </appengine-web-app>
