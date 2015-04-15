@@ -26,6 +26,7 @@ public class GenerateDMSheet extends HttpServlet {
             return;
         }
 
+        String playerName = request.getParameter("playerName");
         String[] mainDeck = request.getParameter("mainDeck").split(",");
         String[] hyperSpatial = request.getParameter("hyperSpatial").split(",");
 
@@ -38,6 +39,7 @@ public class GenerateDMSheet extends HttpServlet {
             PdfContentByte over = pdfStamper.getOverContent(1);
             over.beginText();
 
+            writeText(over, bf, playerName, 280, 798);
             writeMainDeck(over, bf, mainDeck);
             writeHyperSpatial(over, bf, hyperSpatial);
 

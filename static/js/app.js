@@ -11,7 +11,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
       var params = {
         mainDeck: '',
         hyperSpatial: '',
-        playerName: 'test'
+        playerName: $scope.name
       };
       if (data.HyperSpatial === null) {
         data.HyperSpatial = [];
@@ -32,6 +32,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
         var file = new Blob([data], {type: 'application/pdf'}),
             fileURL = URL.createObjectURL(file);
         $window.open($sce.trustAsResourceUrl(fileURL));
+        $scope.process = false;
       });
     });
   };
