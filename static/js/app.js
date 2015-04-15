@@ -3,16 +3,19 @@
 var app = angular.module('app', [
 ]);
 
-app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($scope, $http, $sce, $window) {
 
   $scope.generateDeckSheet = function() {
     $scope.process = true;
-    $http.get('/api/deck/1075015').success(function(data) {
+    $http.get('/api/deck/' + $scope.deckId).success(function(data) {
       var params = {
         mainDeck: '',
         hyperSpatial: '',
         playerName: 'test'
       };
+      if (data.HyperSpatial === null) {
+        data.HyperSpatial = [];
+      }
       for (var i = 0; i < data.HyperSpatial.length; i++) {
         if (i != 0) {
           params.hyperSpatial += ",";
@@ -25,17 +28,10 @@ app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
         }
         params.mainDeck += data.MainDeck[i];
       }
-      $http({
-        method: 'POST',
-        url: 'http://localhost:9090/dmSheet',
-        data: $.param(params)
-      }).success(function(data, status, headers, config) {
-        // var file = new Blob([data], {type: 'application/pdf'});
-        // var fileURL = URL.createObjectURL(file);
-        // //window.open(fileURL);
-        // var base64EncodedPDF = System.Convert.ToBase64String(data);
-        // window.open("data:application/pdf," + base64EncodedPDF);
-        // $scope.process = false;
+      $http.post('http://localhost:9090/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
+        var file = new Blob([data], {type: 'application/pdf'}),
+            fileURL = URL.createObjectURL(file);
+        $window.open($sce.trustAsResourceUrl(fileURL));
       });
     });
   };
@@ -45,6 +41,12 @@ app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
 app.config(['$httpProvider', '$locationProvider', function($httpProvider, $locationProvider) {
   $httpProvider.defaults.headers.common = {'X-Requested-With': 'XMLHttpRequest'};
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
+  $httpProvider.defaults.transformRequest = function(data) {
+    if (data === undefined) {
+      return data;
+    }
+    return $.param(data);
+  }
   $locationProvider.html5Mode({
     enabled: true,
     requireBase: false

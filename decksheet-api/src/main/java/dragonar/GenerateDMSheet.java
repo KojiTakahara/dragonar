@@ -8,6 +8,11 @@ import javax.servlet.http.*;
 
 public class GenerateDMSheet extends HttpServlet {
 
+    private static final int LEFT = 80;
+    private static final int RIGHT = 350;
+    private static final int START_MAIN = 655;
+    private static final int START_HYPER = 135;
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -33,8 +38,7 @@ public class GenerateDMSheet extends HttpServlet {
             PdfContentByte over = pdfStamper.getOverContent(1);
             over.beginText();
 
-            //writeText(over, bf, "奮戦の精霊龍 デコデッコ・デコリアーヌ・ピッカピカⅢ世", 80, 90);
-            //writeText(over, bf, "アクア・カスケード〈ZABUUUN・クルーザー〉", 350, 90);
+            writeMainDeck(over, bf, mainDeck);
             writeHyperSpatial(over, bf, hyperSpatial);
 
             over.endText();
@@ -52,13 +56,33 @@ public class GenerateDMSheet extends HttpServlet {
         response.setStatus(400);
     }
 
-    private void writeHyperSpatial(PdfContentByte over, BaseFont bf, String[] hyperSpatial) {
-        int x = 80;
-        for (int i = 0; i < hyperSpatial.length; i++) {
-            if (4 < i) {
-                x = 350;
+    private void writeMainDeck(PdfContentByte over, BaseFont bf, String[] mainDeck) {
+        int x = LEFT;
+        int y = START_MAIN;
+        for (int i = 0; i < mainDeck.length; i++) {
+            if (20 <= i) {
+                x = RIGHT;
             }
-            writeText(over, bf, hyperSpatial[i], x, 90);
+            if (20 == i) {
+                y = START_MAIN;
+            }
+            writeText(over, bf, mainDeck[i], x, y);
+            y -= 22.5;
+        }
+    }
+
+    private void writeHyperSpatial(PdfContentByte over, BaseFont bf, String[] hyperSpatial) {
+        int x = LEFT;
+        int y = START_HYPER;
+        for (int i = 0; i < hyperSpatial.length; i++) {
+            if (4 <= i) {
+                x = RIGHT;
+            }
+            if (4 == i) {
+                y = START_HYPER;
+            }
+            writeText(over, bf, hyperSpatial[i], x, y);
+            y -= 22.5;
         }
     }
 
