@@ -1,5 +1,11 @@
 @charset "utf-8";
+
 /* CSS Document */
+@media only screen and (max-width: 767px) {
+	.hideBlock {
+		display: none;
+	}
+}
 
 /* Float Elements
 ---------------------------------*/
@@ -39,7 +45,6 @@ img{ max-width:100%;}
 a, a:hover, a:active{ outline:0px !important}
 
 @font-face {
-  font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
   src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
   font-weight: normal;
@@ -47,7 +52,6 @@ a, a:hover, a:active{ outline:0px !important}
 }
 
 @font-face {
-    font-family: 'LatoRegular';
     src: url('../fonts/lato-regular.eot');
     src: url('../fonts/lato-regular.eot') format('embedded-opentype'),
          url('../fonts/lato-regular.woff2') format('woff2'),
@@ -56,7 +60,6 @@ a, a:hover, a:active{ outline:0px !important}
          url('../fonts/lato-regular.svg#LatoRegular') format('svg');
 }
 @font-face {
-    font-family: 'LatoBoldBold';
     src: url('../fonts/lato-bold.eot');
     src: url('../fonts/lato-bold.eot') format('embedded-opentype'),
          url('../fonts/lato-bold.woff2') format('woff2'),
@@ -65,7 +68,6 @@ a, a:hover, a:active{ outline:0px !important}
          url('../fonts/lato-bold.svg#LatoBoldBold') format('svg');
 }
 @font-face {
-    font-family: 'DosisBold';
     src: url('../fonts/dosis-bold.eot');
     src: url('../fonts/dosis-bold.eot') format('embedded-opentype'),
          url('../fonts/dosis-bold.woff2') format('woff2'),
@@ -78,7 +80,6 @@ a, a:hover, a:active{ outline:0px !important}
 ---------------------------------*/
 body {
 	background:#fff;
-	font-family: 'Lato', sans-serif;
 	font-size:14px;
 	font-weight:normal;
 	color:#888888;
@@ -87,14 +88,12 @@ body {
 h2{
 	font-size:38px;
 	color:#222222;
-	font-family:'Dosis';
 	font-weight:700;
 	margin:35px 0 25px 0;
 	text-align:center;
 	text-transform:uppercase;
 }
 h3{
-	font-family: 'Dosis', sans-serif;
 	font-weight: 600;
 	color:#222222;
 	font-size:16px;
@@ -104,7 +103,6 @@ h3{
 h6{
 	font-size:16px;
 	color:#888888;
-	font-family: 'Open Sans', sans-serif;
 	font-weight:400;
 	text-align:center;
 	margin:0 0 60px 0;
@@ -169,7 +167,6 @@ p{
 	display:block;
 	font-size:14px;
 	color:#222222;
-	font-family:'Dosis';
 	text-decoration:none;
 	text-transform:uppercase;
 	font-weight: 600;
@@ -223,7 +220,6 @@ p{
 	color:#f56eab;
 	margin:0 0 20px 0;
 	text-align:left;
-	font-family:'Lato';
 	font-weight: 700;
 	}
 
@@ -232,7 +228,6 @@ p{
 	color:#111111;
 	line-height: 52px;
 	margin:0 0 26px 0;
-	font-family:'Dosis';
 	text-align:left;
 	font-weight:700;
 	}
@@ -242,11 +237,9 @@ p{
 	color:#888888;
 	margin:0 0 30px 0;
 	line-height: 26px;
-	font-family:'Lato';
 	}
 
 a.learn_more2{
-	font-family: 'Dosis';
 	display:block;
 	font-size:16px;
 	color:#ffffff;
@@ -256,7 +249,6 @@ a.learn_more2{
 	line-height:46px;
 	border-radius:3px;
 	text-align:center;
-	font-family:''Dosis'';
 	text-transform:uppercase;
 	font-weight: 600;
 	transition:all 0.2s ease-in-out;
@@ -335,7 +327,6 @@ a.learn_more2:hover{
 	}
 
 .service_block h3{
-	font-family: 'Dosis';
 	font-weight: 600;
 	font-size:18px;
 	color:#111111;
@@ -385,7 +376,6 @@ a.learn_more2:hover{
 .service-list-col1 i{
 	display:;
 	color:#888;
-	font-family: 'linecons';
 	font-size: 19px;
     font-style: normal;
     line-height: 20px;
@@ -420,7 +410,6 @@ a.contact_btn{
 	font-size:16px;
 	color:#ffffff;
 	border-radius:3px;
-	font-family:'Dosis';
 	font-weight: 600;
 	transition:all 0.2s ease-in-out;
 	-moz-transition:all 0.2s ease-in-out;
@@ -457,7 +446,6 @@ a.contact_btn:hover{
 	color:#222222;
 	border-radius:4px;
 	text-transform:uppercase;
-	font-family: 'LatoRegular', sans-serif;
 	background:#f7f7f7;
 	margin-bottom:5px;
 	transition:all 0.3s ease-in-out;
@@ -594,7 +582,6 @@ img {
 	}
 
 .quote_section p{
-	font-family: 'Lato',sans-serif;
 	font-style: italic;
 	font-size:18px;
 	font-weight: 300;
@@ -629,7 +616,7 @@ img {
 .team-leader-box{
 	width:30.66%;
 	margin-right: 3.82979%;
-	height: 400px;
+	height: 380px;
 	overflow: hidden;
 	text-align: center;
 	float: left;
@@ -694,7 +681,6 @@ img {
 	margin:0 11px;
 }
 .team-leader ul li a{
-	font-family: 'FontAwesome';
 	display:inline-block;
 	font-size:28px;
 	color:#fff;
@@ -921,7 +907,6 @@ img {
 	border-radius:4px;
 	font-size:15px;
 	color:#aaa;
-	font-family: 'Lato', sans-serif;
 	margin:0 0 15px 0;
 	transition:all 0.3s ease-in-out;
 	-moz-transition:all 0.3s ease-in-out;
@@ -939,10 +924,8 @@ img {
 	height:230px;
 	resize:none;
 	overflow:auto;
-	font-family: 'Lato', sans-serif;
 }
 .input-btn{
-	font-family: 'Dosis', sans-serif;
 	width:175px;
 	height:50px;
 	letter-spacing: 0px;
@@ -1087,7 +1070,6 @@ img {
     border-radius: 4px;
     color: #222222;
     display: inline-block;
-    font-family: 'LatoRegular',sans-serif;
     font-size: 12px;
     line-height: 20px;
     margin-bottom: 5px;
@@ -1104,7 +1086,6 @@ img {
 
 .section-title h2{
 	color: #222222;
-    font-family: DosisBold;
     font-size: 34px;
     font-weight: normal;
     letter-spacing: -1px;
@@ -1116,7 +1097,6 @@ img {
 .section-title span{
 	display:block;
 	color: #888888;
-    font-family: 'Open Sans',sans-serif;
     font-size: 16px;
     font-weight: 400;
     margin: 0 0 60px;
@@ -1204,7 +1184,6 @@ img {
 		color:#222222;
 		text-transform:uppercase;
 		margin-top:25px;
-		font-family:DosisBold;
 		opacity:0;
 		font-size:18px;
 		transition:all 0.2s ease 0s;
