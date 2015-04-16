@@ -1,7 +1,11 @@
 package dragonar;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 import java.io.IOException;
 import javax.servlet.http.*;
@@ -15,9 +19,6 @@ public class GenerateDMSheet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Origin", "*");
 
         // validate
         if (!validate(request)) {
@@ -47,14 +48,8 @@ public class GenerateDMSheet extends HttpServlet {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-
+        setResponseHeader(response);
         response.setContentType("application/pdf");
-    }
-
-    private void setBadRequestResponse(HttpServletResponse response) throws IOException {
-        response.getWriter().println("bad request");
-        response.setContentType("application/json");
-        response.setStatus(400);
     }
 
     private void writeMainDeck(PdfContentByte over, BaseFont bf, String[] mainDeck) {
@@ -123,16 +118,29 @@ public class GenerateDMSheet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "*");
+        doPost(req, resp);
     }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "*");
+        setResponseHeader(resp);
+    }
+
+    private void setBadRequestResponse(HttpServletResponse response) throws IOException {
+        setResponseHeader(response);
+        response.getWriter().println("bad request");
+        response.setStatus(400);
+    }
+
+    private void setResponseHeader(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Allow", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.setContentType("application/json");
+        response.setStatus(200);
     }
 
 }
