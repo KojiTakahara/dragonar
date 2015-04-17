@@ -1,4 +1,4 @@
-package dragonar;
+package dragonar.controller;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -6,18 +6,23 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import javax.servlet.http.*;
 
-public class GenerateDMSheet extends HttpServlet {
+@RestController
+@RequestMapping("/dmSheet")
+public class DMSheetController {
 
     private static final int LEFT = 80;
     private static final int RIGHT = 350;
     private static final int START_MAIN = 655;
     private static final int START_HYPER = 135;
 
-    @Override
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // validate
@@ -116,14 +121,16 @@ public class GenerateDMSheet extends HttpServlet {
         return true;
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        doPost(req, resp);
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    protected String doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setResponseHeader(resp);
+        return "";
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @RequestMapping(value = "/", method = RequestMethod.OPTIONS)
+    protected String doOptions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setResponseHeader(resp);
+        return "";
     }
 
     private void setBadRequestResponse(HttpServletResponse response) throws IOException {
