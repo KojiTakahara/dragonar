@@ -31,7 +31,17 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
       $http.post('http://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
         var file = new Blob([data], {type: 'application/pdf'}),
             fileURL = URL.createObjectURL(file);
-        $window.open($sce.trustAsResourceUrl(fileURL));
+        if (new UAParser().getOS().name === "iOS") {
+          var reader = new FileReader();
+          reader.onload = function(e){
+            var bdata = btoa(reader.result);
+            var datauri = 'data:application/pdf;base64,' + bdata;
+            $window.location.href = datauri;
+          }
+          reader.readAsBinaryString(file);
+        } else {
+          $window.open($sce.trustAsResourceUrl(fileURL));
+        }
         $scope.process = false;
       }).error(function(data, status, headers, config) {
         $scope.process = false;
