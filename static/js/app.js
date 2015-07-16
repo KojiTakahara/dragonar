@@ -10,6 +10,22 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
 
   $scope.generateDeckSheet = function() {
     $scope.process = true;
+    if ($scope.inputType === "id") {
+      if ($scope.deckId === "" || $scope.deckId == null || !angular.isNumber($scope.deckId)) {
+        $scope.process = false;
+        return:
+      }
+      scraping();
+    } else {
+      if ($scope.deckText === "" || $scope.deckText == null) {
+        $scope.process = false;
+        return:
+      }
+      formatText();
+    }
+  };
+
+  var scraping = function() {
     $http.get('/api/deck/' + $scope.deckId).success(function(data) {
       var params = {
         mainDeck: '',
@@ -31,24 +47,62 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
         }
         params.mainDeck += data.MainDeck[i];
       }
-      $http.post('http://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
-        var file = new Blob([data], {type: 'application/pdf'}),
-            fileURL = URL.createObjectURL(file);
-        if (new UAParser().getOS().name === "iOS") {
-          var reader = new FileReader();
-          reader.onload = function(e){
-            var bdata = btoa(reader.result);
-            var datauri = 'data:application/pdf;base64,' + bdata;
-            $window.location.href = datauri;
+      callApi(params);
+    }).error(function(data, status, headers, config) {
+      $scope.process = false;
+    });
+  };
+
+  var formatText = function() {
+    var params = {
+      mainDeck: '',
+      hyperSpatial: '',
+      playerName: $scope.name
+    };
+    var textList = $scope.deckText.split(/\r\n|\r|\n/);
+    var mainDeckSize = 40;
+    var hyperSpatialSize = 8;
+    for (var i = 0; i < textList.length; i++) {
+      if (2 <= i) {
+        var count = textList[i].split(" x ")[0];
+        var name = textList[i].split(" x ")[1];
+        for (var j = 0; j < count; j++) {
+          if (0 < mainDeckSize) {
+            if (mainDeckSize != 40) {
+              params.mainDeck += ",";
+            }
+            params.mainDeck += name;
+            mainDeckSize--;
+          } else if (0 < hyperSpatialSize) {
+            if (hyperSpatialSize != 8) {
+              params.hyperSpatial += ",";
+            }
+            params.hyperSpatial += name.split("／")[0];
+            hyperSpatialSize--;
           }
-          reader.readAsBinaryString(file);
-        } else {
-          $window.open($sce.trustAsResourceUrl(fileURL));
         }
-        $scope.process = false;
-      }).error(function(data, status, headers, config) {
-        $scope.process = false;
-      });
+      }
+    }
+    $scope.process = false;
+    callApi(params);
+  };
+
+  var callApi = function(params) {
+    $http.post('http://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
+      var file = new Blob([data], {type: 'application/pdf'}),
+          fileURL = URL.createObjectURL(file);
+      if (new UAParser().getOS().name === "iOS") {
+        var reader = new FileReader();
+        reader.onload = function(e){
+          var bdata = btoa(reader.result);
+          var datauri = 'data:application/pdf;base64,' + bdata;
+          $window.location.href = datauri;
+        }
+        reader.readAsBinaryString(file);
+      } else {
+        $window.open($sce.trustAsResourceUrl(fileURL));
+      }
+      $scope.process = false;
     }).error(function(data, status, headers, config) {
       $scope.process = false;
     });

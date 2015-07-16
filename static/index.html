@@ -40,8 +40,8 @@
                 <label>
                   <input type="radio" name="inputType" class="wow flipInY delay-02s animated" ng-click="inputType='text'"> text
                 </label>
-                <input class="input-text wow flipInY delay-02s animated" type="number" placeholder="DMvault DeckID" min="1" mas="9999999" style="visibility: visible;" ng-model="deckId" required ng-show="inputType == 'id'">
-                <textarea class="input-text flipInY delay-02s animated" placeholder="Paste" required ng-show="inputType == 'text'"></textarea>
+                <input class="input-text wow flipInY delay-02s animated" type="text" placeholder="DMvault DeckID" min="1" mas="9999999" style="visibility: visible;" ng-model="deckId" ng-required="inputType == 'id'" ng-show="inputType == 'id'">
+                <textarea ng-model="deckText" class="input-text flipInY delay-02s animated" placeholder="Paste" ng-required="inputType == 'text'" ng-show="inputType == 'text'"></textarea>
                 <select ng-model="deckSheetType" class="input-text wow flipInY delay-02s animated">
                   <option value="official">DeckSheetType: Official</option>
                   <option value="dmgp_1st">DeckSheetType: DMGP-1st</option>
