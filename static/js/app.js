@@ -5,6 +5,9 @@ var app = angular.module('app', [
 
 app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($scope, $http, $sce, $window) {
 
+  $scope.inputType = "id";
+  $scope.deckSheetType = "official";
+
   $scope.generateDeckSheet = function() {
     $scope.process = true;
     $http.get('/api/deck/' + $scope.deckId).success(function(data) {

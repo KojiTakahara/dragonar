@@ -25,7 +25,7 @@
 <body ng-app="app" ng-controller="indexCtrl">
 
 <section>
-  <div class="top_cont_inner">
+  <div class="top_cont_inner {{deckSheetType}}">
     <div class="container">
       <div class="top_content">
         <div class="row">
@@ -33,9 +33,20 @@
             <div class="top_left_cont flipInY wow animated">
               <h2>generate dm decksheet!!</h2>
               <form name="form" ng-submit="generateDeckSheet()">
-                <input class="input-text animated wow flipInY delay-02s animated" type="text" placeholder="Player Name" style="visibility: visible;" ng-model="name" maxlength="14" required>
-                <input class="input-text animated wow flipInY delay-02s animated" type="number" placeholder="DMvault DeckID" min="1" mas="9999999" style="visibility: visible;" ng-model="deckId" required>
-                <input class="input-btn animated wow flipInY delay-08s animated" type="submit" value="generate" style="visibility: visible;" ng-disabled="process">
+                <input class="input-text wow flipInY delay-02s animated" type="text" placeholder="Player Name" style="visibility: visible;" ng-model="name" maxlength="14" required>
+                <label>
+                  <input type="radio" name="inputType" class="wow flipInY delay-02s animated" ng-click="inputType='id'" checked> value ID
+                </label>　
+                <label>
+                  <input type="radio" name="inputType" class="wow flipInY delay-02s animated" ng-click="inputType='text'"> text
+                </label>
+                <input class="input-text wow flipInY delay-02s animated" type="number" placeholder="DMvault DeckID" min="1" mas="9999999" style="visibility: visible;" ng-model="deckId" required ng-show="inputType == 'id'">
+                <textarea class="input-text flipInY delay-02s animated" placeholder="Paste" required ng-show="inputType == 'text'"></textarea>
+                <select ng-model="deckSheetType" class="input-text wow flipInY delay-02s animated">
+                  <option value="official">DeckSheetType: Official</option>
+                  <option value="dmgp_1st">DeckSheetType: DMGP-1st</option>
+                </select>
+                <input class="input-btn wow flipInY delay-08s animated" type="submit" value="generate" style="visibility: visible;" ng-disabled="process">
               </form>
             </div>
           </div>
