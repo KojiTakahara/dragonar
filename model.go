@@ -1,6 +1,10 @@
 package dragonar
 
 type Deck struct {
-	HyperSpatial []string
+	Player       string
+	Format       string
 	MainDeck     []string
+	MainColors   []string
+	HyperSpatial []string
+	HyperColors  []string
 }

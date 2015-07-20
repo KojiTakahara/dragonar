@@ -12,6 +12,7 @@ func init() {
 	m := martini.Classic()
 	m.Use(render.Renderer())
 	m.Get("/api/deck/:id", CreateDeckSheet)
+	m.Post("/api/deck", RegistDeck)
 	http.ListenAndServe(":8080", m)
 	http.Handle("/", m)
 }

@@ -11,15 +11,15 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
   $scope.generateDeckSheet = function() {
     $scope.process = true;
     if ($scope.inputType === "id") {
-      if ($scope.deckId === "" || $scope.deckId == null || !angular.isNumber($scope.deckId)) {
+      if ($scope.deckId === "" || $scope.deckId == null || !angular.isNumber($scope.deckId - 0)) {
         $scope.process = false;
-        return:
+        return;
       }
       scraping();
     } else {
       if ($scope.deckText === "" || $scope.deckText == null) {
         $scope.process = false;
-        return:
+        return;
       }
       formatText();
     }
@@ -30,7 +30,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
       var params = {
         mainDeck: '',
         hyperSpatial: '',
-        playerName: $scope.name
+        playerName: $scope.name,
+        format: $scope.deckSheetType,
+        deckId: $scope.deckId
       };
       if (data.HyperSpatial === null) {
         data.HyperSpatial = [];
@@ -57,12 +59,17 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
     var params = {
       mainDeck: '',
       hyperSpatial: '',
-      playerName: $scope.name
+      playerName: $scope.name,
+      format: $scope.deckSheetType,
+      deckId: 1
     };
     var textList = $scope.deckText.split(/\r\n|\r|\n/);
     var mainDeckSize = 40;
     var hyperSpatialSize = 8;
     for (var i = 0; i < textList.length; i++) {
+      if (1 == i) {
+        params.deckId = textList[i].split(/(.*)dmvault.ath.cx\/deck(.*).html(.*)/)[2];
+      }
       if (2 <= i) {
         var count = textList[i].split(" x ")[0];
         var name = textList[i].split(" x ")[1];
@@ -83,12 +90,15 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
         }
       }
     }
-    $scope.process = false;
-    callApi(params);
+    if (params.mainDeck != "") {
+      callApi(params);
+    } else {
+      $scope.process = false;
+    }
   };
 
   var callApi = function(params) {
-    $http.post('http://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
+    $http.post('https://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
       var file = new Blob([data], {type: 'application/pdf'}),
           fileURL = URL.createObjectURL(file);
       if (new UAParser().getOS().name === "iOS") {

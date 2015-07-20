@@ -27,10 +27,12 @@ func GetDeckByVault(id int, req *http.Request) *Deck {
 	doc.Find("#recipetable2").Each(func(_ int, s *goquery.Selection) {
 		s.Find("tr").Each(func(_ int, s *goquery.Selection) {
 			var cardName = s.Find("a").Text()
+			var class, _ = s.Attr("class")
 			if cardName != "" {
 				var num = s.Find(".num").Text()
 				for i := 0; i < ToInt(num); i++ {
 					deck.MainDeck = append(deck.MainDeck, cardName)
+					deck.MainColors = append(deck.MainColors, class)
 				}
 			}
 		})
@@ -39,10 +41,12 @@ func GetDeckByVault(id int, req *http.Request) *Deck {
 	doc.Find("#recipetable3").Each(func(_ int, s *goquery.Selection) {
 		s.Find("tr").Each(func(_ int, s *goquery.Selection) {
 			var cardName = getHyperSpatialCardName(s)
+			var class, _ = s.Attr("class")
 			if cardName != "" {
 				var num = s.Find(".num").Text()
 				for i := 0; i < ToInt(num); i++ {
 					deck.HyperSpatial = append(deck.HyperSpatial, cardName)
+					deck.HyperColors = append(deck.HyperColors, class)
 				}
 			}
 		})
