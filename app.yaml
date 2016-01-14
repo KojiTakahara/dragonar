@@ -32,5 +32,9 @@ handlers:
   static_files: static/index.html
   upload: static/index.html
 
+- url: /googled39548f713433868.html
+  static_files: static/googled39548f713433868.html
+  upload: static/googled39548f713433868.html
+
 - url: /api/.*
   script: _go_app
