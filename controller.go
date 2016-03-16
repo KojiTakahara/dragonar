@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func CreateDeckSheet(r render.Render, params martini.Params, w http.ResponseWriter, req *http.Request) {
@@ -35,9 +36,11 @@ func RegistDeck(r render.Render, req *http.Request) {
 		return
 	}
 	deck := &Deck{}
+    deck.Player = formDeck.Player
 	deck.Format = formDeck.Format
 	deck.MainDeck = strings.Split(formDeck.MainDeck, ",")
 	deck.HyperSpatial = strings.Split(formDeck.HyperSpatial, ",")
+    deck.Time = time.Now()
 	id, _ := strconv.Atoi(formDeck.DeckId)
 	key := datastore.NewKey(c, "Deck", "", int64(id), nil)
 	key, err := datastore.Put(c, key, deck)
