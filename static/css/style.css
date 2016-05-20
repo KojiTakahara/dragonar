@@ -197,6 +197,9 @@ p{
 .dmgp_1st{
 	background:url(../img/deck_pad_gp.png) no-repeat right bottom;
 	}
+.dmgp_2nd{
+	background:url(../img/deck_pad_gp_2nd.png) no-repeat right bottom;
+	}
 
 .top_content{
 	position:relative;

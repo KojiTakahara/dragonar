@@ -98,7 +98,8 @@ app.controller('indexCtrl', ['$scope', '$http', '$sce', '$window', function($sco
   };
 
   var callApi = function(params) {
-    $http.post('https://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
+    // $http.post('http://localhost:9000/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
+      $http.post('https://decksheet-api.herokuapp.com/dmSheet', params, {responseType:'arraybuffer'}).success(function(data) {
       var file = new Blob([data], {type: 'application/pdf'}),
           fileURL = URL.createObjectURL(file);
       if (new UAParser().getOS().name === "iOS") {
