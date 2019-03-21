@@ -1,0 +1,20 @@
+app-components-card-info {
+    .mat-list-item {
+        height: auto !important;
+    }
+    .mat-list-item-content {
+        display: grid !important;
+        grid-template-columns: 1fr 30px 25px 30px;
+        grid-template-rows: 40px;
+        .name {
+            white-space: nowrap;
+            padding-right: 8px;
+        }
+        .number {
+            text-align: center;
+        }
+        .mat-button-wrapper {
+            padding: 0px;
+        }
+    }
+}
