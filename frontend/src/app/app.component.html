@@ -1,4 +1,4 @@
-<h1>GENERATE DM DECKSHEET!!</h1>
+<h2>GENERATE DM DECKSHEET!!</h2>
 <form>
   <div>
     <mat-form-field class="">
@@ -58,11 +58,25 @@
       </app-components-card-info>
     </mat-list>
     <mat-divider></mat-divider>
-    <mat-slide-toggle color="accent">
+    <mat-slide-toggle color="accent" (change)="forbiddenStar = $event.checked">
       FORBIDDEN STAR ～世界最後の日～
     </mat-slide-toggle>
   </mat-card>
   <div class="submit">
-    <button mat-raised-button color="primary" [disabled]="disabled">出力</button>
+    <button mat-raised-button color="primary"
+      *ngIf="!safeUrl"
+      [disabled]="disabled"
+      (click)="submit()">
+      <span *ngIf="!loading">出力</span>
+      <mat-progress-bar
+        *ngIf="loading"
+        [color]="'primary'"
+        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </button>
+    <a mat-raised-button color="accent" *ngIf="safeUrl" [href]="safeUrl">表示</a>
   </div>
 </form>
+<footer>
+  Author:<a href="https://twitter.com/dm_plateau" target="_blank">@dm_plateau</a>
+</footer>

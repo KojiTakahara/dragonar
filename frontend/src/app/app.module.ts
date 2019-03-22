@@ -1,6 +1,6 @@
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,12 +18,14 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,
   MatTableModule,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
 } from '@angular/material';
 import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
@@ -36,6 +38,7 @@ import {
   AppComponentsCardInfoComponent,
   AppComponentsCardSearchComponent
 } from './components';
+import { PlatformModule } from '@angular/cdk/platform';
 
 const materialModules = [
   MatAutocompleteModule,
@@ -53,12 +56,15 @@ const materialModules = [
   MatMenuModule,
   MatMomentDateModule,
   MatNativeDateModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,
   MatTableModule,
-  MatSortModule
+  MatSortModule,
+  PlatformModule
 ];
 
 const MY_DATE_FORMATS = {
@@ -88,6 +94,7 @@ const COMPONETS = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    HttpClientXsrfModule,
     ReactiveFormsModule,
     Nl2BrPipeModule,
     ...materialModules

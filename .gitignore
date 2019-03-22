@@ -2,3 +2,5 @@ decksheet-api/target/
 decksheet-api/.idea/
 *.iml
 go.sum
+vendor/
+dist/

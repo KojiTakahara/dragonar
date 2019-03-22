@@ -9,19 +9,19 @@ import { HttpClient } from '@angular/common/http';
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponentsCardSearchComponent implements OnInit {
-    
-    private myControl = new FormControl();
-    private options: string[] = [];
-    private postUrl: string = 'http://localhost:8080/api/v1/card/search';
+
+    myControl = new FormControl();
+    options: string[] = [];
+    private postUrl = 'http://localhost:8080/api/v1/card/search';
 
     @ViewChild('input') input: ElementRef;
 
     constructor(private http: HttpClient) { }
 
     ngOnInit() { }
-  
+
     search(ev: any) {
-        let formData: FormData = new FormData(); 
+        const formData: FormData = new FormData();
         formData.append('keyword', ev.target.value);
         this.http.post(this.postUrl, formData).subscribe((res: any) => {
             this.options = res;

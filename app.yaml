@@ -4,3 +4,11 @@ handlers:
 - url: /api/.*
   script: auto
   secure: always
+
+- url: /frontend/(.*\.(gif|png|jpeg|jpg|css|js|ico))$
+  static_files: dist/\1
+  upload: dist/(.*)
+
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html

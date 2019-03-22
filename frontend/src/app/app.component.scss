@@ -1,21 +1,25 @@
-$defaultFontSize: 10px;
+$defaultFontSize: 16px;
 $defaultPadding: 16px;
 
 app-root {
-    h1 {
+    h2 {
         margin-block-start: 0;
-        padding: 0.67em 0 0.67em 8px;
+        padding: 0.50em 0 0.50em 8px;
         background-color: #3f51b5;
         color: white;
+        box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
     }
     form {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
         margin: 8px;
     }
     font-size: $defaultFontSize;
     .add-card {
         display: grid;
-        grid-template-columns: 1fr 40px 70px 30px;
-        grid-template-rows: 30px;
+        grid-template-columns: 1fr 40px 60px 40px;
+        grid-template-rows: 45px;
         padding-bottom: 1.25em;
         app-components-card-search {
             padding-right: 8px;
@@ -55,6 +59,9 @@ app-root {
         min-width: 50px !important;
         line-height: 6px !important;
         padding: 10px 0 !important;
+        .mat-button-wrapper {
+            font-size: 10px !important;
+        }
     }
     .add-button {
         min-width: 20px !important;
@@ -64,8 +71,22 @@ app-root {
     .submit {
         padding: $defaultPadding 0;
         text-align: center;
-        button {
+        button,
+        a {
             width: 40%;
+            min-height: 37.875px;
+        }
+    }
+    footer {
+        margin-top: auto;
+        padding: 8px 0;
+        background-color: #3f51b5;
+        text-align: center;
+        color: white;
+        font-size: 10px;
+        a {
+            margin-left: 4px;
+            color: white;
         }
     }
 }
