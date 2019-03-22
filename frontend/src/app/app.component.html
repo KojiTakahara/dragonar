@@ -63,6 +63,8 @@
     </mat-slide-toggle>
   </mat-card>
   <div class="submit">
-    <button mat-raised-button color="primary" [disabled]="disabled">出力</button>
+    <button mat-raised-button color="primary" [disabled]="disabled" (click)="submit()">
+      出力
+    </button>
   </div>
 </form>

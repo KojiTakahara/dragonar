@@ -1,6 +1,6 @@
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -88,6 +88,7 @@ const COMPONETS = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    HttpClientXsrfModule,
     ReactiveFormsModule,
     Nl2BrPipeModule,
     ...materialModules
