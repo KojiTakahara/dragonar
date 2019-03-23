@@ -1,0 +1,78 @@
+$defaultFontSize: 10px;
+$defaultPadding: 16px;
+
+app-root {
+    h1 {
+        margin-block-start: 0;
+        padding: 0.67em 0 0.67em 8px;
+        background-color: #3f51b5;
+        color: white;
+    }
+    form {
+        margin: 8px;
+    }
+    font-size: $defaultFontSize;
+    .add-card {
+        display: grid;
+        grid-template-columns: 1fr 40px 70px 30px;
+        grid-template-rows: 30px;
+        padding-bottom: 1.25em;
+        app-components-card-search {
+            padding-right: 8px;
+            .mat-form-field {
+                width: 100%;
+            }
+        }
+    }
+    .number {
+        .mat-form-field-infix {
+            width: 40px;
+        }
+    }
+    .mat-button-wrapper {
+        font-size: $defaultFontSize;
+    }
+    .deck {
+        .spatial {
+            padding-bottom: $defaultPadding;
+        }
+        .mat-list-item-content {
+            font-size: $defaultFontSize;
+        }
+        .mat-mini-fab {
+            width: 30px;
+            height: 30px;
+            .mat-icon {
+                font-size: 15px;
+            }
+        }
+    }
+    .mat-slide-toggle {
+        padding-top: $defaultPadding;
+    }
+    .zone-button {
+        margin: 0px 4px 0px 8px;
+        min-width: 50px !important;
+        line-height: 6px !important;
+        padding: 10px 0 !important;
+    }
+    .add-button {
+        min-width: 20px !important;
+        line-height: 6px !important;
+        padding: 0 !important;
+    }
+    .submit {
+        padding: $defaultPadding 0;
+        text-align: center;
+        button {
+            width: 40%;
+        }
+    }
+}
+
+.mat-option {
+    padding: 0 8px !important;
+    line-height: 32px !important;
+    height: 32px !important;
+    font-size: $defaultFontSize;
+}

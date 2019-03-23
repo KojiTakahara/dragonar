@@ -1,18 +1,32 @@
-package dragonar
+// +build !appengine,!appenginevm
+
+package main
 
 import (
-	"github.com/go-martini/martini"
-	"github.com/martini-contrib/render"
 	"net/http"
+
+	"github.com/KojiTakahara/dragonar/api"
+	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo"
+
+	"google.golang.org/appengine"
 )
 
-var m *martini.Martini
+func main() {
+	e := echo.New()
+	defer e.Close()
 
-func init() {
-	m := martini.Classic()
-	m.Use(render.Renderer())
-	m.Get("/api/deck/:id", CreateDeckSheet)
-	m.Post("/api/deck", RegistDeck)
-	http.ListenAndServe(":8080", m)
-	http.Handle("/", m)
+	e.Use(middleware.CORS())
+	e.Use(middleware.Recover())
+	e.Use(middleware.Logger())
+	e.Use(middleware.Gzip())
+	e.Use(middleware.Static("static/public"))
+
+	http.Handle("/", e)
+	g := e.Group("/api/v1")
+	g.POST("/card/search", api.Search)
+	g.GET("/deck", api.GetDeckByPlayer)
+	// g.POST("/deck", api.Find)
+
+	appengine.Main()
 }

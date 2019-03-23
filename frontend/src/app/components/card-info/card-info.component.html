@@ -1,0 +1,14 @@
+<mat-list-item role="listitem">
+    <div class="name">
+        {{card.name}}
+    </div>
+    <button mat-mini-fab color="primary">
+        <mat-icon (click)="minus()">remove</mat-icon>
+    </button>
+    <div class="number">
+        {{card.num}}
+    </div>
+    <button mat-mini-fab color="accent">
+        <mat-icon (click)="plus()">add</mat-icon>
+    </button>
+</mat-list-item>

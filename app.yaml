@@ -1,40 +1,14 @@
-application: dm-decksheet
-version: 1-1-0
-runtime: go
-api_version: go1
-skip_files:
-  - ^(.*/)?.*/node_modules/.*
-  - ^(.*/)?.*/test/.*
+runtime: go111
 
 handlers:
+- url: /api/.*
+  script: auto
+  secure: always
 
-- url: /(.*\.(gif|png|jpg|pdf))
-  static_files: static/\1
-  upload: static/img/(.*\.(gif|png|jpg|pdf))
-
-- url: /(favicon.ico)
-  static_files: static/img/\1
-  upload: static/img/favicon.ico
-
-- url: /css/(.*\.(css|map))
-  static_files: static/css/\1
-  upload: static/css/(.*\.(css|map))
-
-- url: /js/(.*\.(js|map))
-  static_files: static/js/\1
-  upload: static/js/(.*\.(js|map))
-
-- url: /font/(.*\.(eot|svg|ttf|woff))
-  static_files: static/font/\1
-  upload: static/font/(.*\.(eot|svg|ttf|woff))
+- url: /frontend/(.*\.(gif|png|jpeg|jpg|css|js|ico))$
+  static_files: dist/\1
+  upload: dist/(.*)
 
 - url: /
-  static_files: static/index.html
-  upload: static/index.html
-
-- url: /googled39548f713433868.html
-  static_files: static/googled39548f713433868.html
-  upload: static/googled39548f713433868.html
-
-- url: /api/.*
-  script: _go_app
+  static_files: dist/index.html
+  upload: dist/index.html

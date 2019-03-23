@@ -1,0 +1,70 @@
+<h1>GENERATE DM DECKSHEET!!</h1>
+<form>
+  <div>
+    <mat-form-field class="">
+      <input matInput placeholder="HN" (input)="name = $event.target.value">
+    </mat-form-field>
+    <mat-form-field class="">
+      <input matInput placeholder="ふりがな" (input)="nameKana = $event.target.value">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="">
+      <input type="number" matInput placeholder="デュエマID" (input)="dmpId = $event.target.value">
+    </mat-form-field>
+  </div>
+  <div class="add-card">
+    <app-components-card-search></app-components-card-search>
+    <mat-form-field class="number">
+      <mat-label>枚数</mat-label>
+      <mat-select [(value)]="selectedNumber">
+        <mat-option *ngFor="let num of numbers" [value]="num">
+          {{num}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-container>
+      <button mat-raised-button class="zone-button" color="primary" *ngIf="zone === 'main'" (click)="changeZone()">デッキ</button>
+      <button mat-raised-button class="zone-button" color="accent" *ngIf="zone === 'gr'" (click)="changeZone()">超GR</button>
+      <button mat-raised-button class="zone-button" color="warn" *ngIf="zone === 'spatial'" (click)="changeZone()">超次元</button>
+    </ng-container>
+    <button mat-button class="add-button" (click)="add()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <mat-card class="deck">
+    <div>デッキリスト<span>：{{mainLength}}枚</span></div>
+    <mat-list role="list">
+      <app-components-card-info *ngFor="let item of main"
+        [card]="item"
+        (change)="mainLength = mainLength + $event"
+        (remove)="remove(item, 'main')">
+      </app-components-card-info>
+    </mat-list>
+    <div>超GRゾーン<span>：{{grLength}}枚</span></div>
+    <mat-list role="list">
+      <app-components-card-info *ngFor="let item of gr"
+        [card]="item"
+        (change)="grLength = grLength + $event"
+        (remove)="remove(item, 'gr')">
+      </app-components-card-info>
+    </mat-list>
+    <div>超次元ゾーン<span>：{{spatialLength}}枚</span></div>
+    <mat-list role="list" class="spatial">
+      <app-components-card-info *ngFor="let item of spatial"
+        [card]="item"
+        (change)="spatialLength = spatialLength + $event"
+        (remove)="remove(item, 'spatial')">
+      </app-components-card-info>
+    </mat-list>
+    <mat-divider></mat-divider>
+    <mat-slide-toggle color="accent">
+      FORBIDDEN STAR ～世界最後の日～
+    </mat-slide-toggle>
+  </mat-card>
+  <div class="submit">
+    <button mat-raised-button color="primary" [disabled]="disabled" (click)="submit()">
+      出力
+    </button>
+  </div>
+</form>
