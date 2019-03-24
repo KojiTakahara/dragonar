@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/KojiTakahara/dragonar/api"
-	"github.com/labstack/echo/middleware"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 
 	"google.golang.org/appengine"
 )
@@ -26,7 +26,9 @@ func main() {
 	g := e.Group("/api/v1")
 	g.POST("/card/search", api.Search)
 	g.GET("/deck", api.GetDeckByPlayer)
-	// g.POST("/deck", api.Find)
+	g.POST("/deck", api.CreateDeck)
+	g.GET("/pack", api.FindPack)
+	g.POST("/pack", api.CreatePack)
 
 	appengine.Main()
 }

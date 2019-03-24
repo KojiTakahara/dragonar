@@ -28,12 +28,12 @@ func GetDeckByPlayer(c echo.Context) error {
 	return c.JSON(http.StatusOK, decks)
 }
 
-func CreateRace(c echo.Context) (*model.Deck, error) {
+func CreateDeck(c echo.Context) error {
 	ctx := appengine.NewContext(c.Request())
 	forbidden, _ := strconv.ParseBool(c.FormValue("forbiddenStar"))
 	model := &model.Deck{
-		Player:        c.FormValue("player"),
-		DmpId:         c.FormValue("dmpId"),
+		Player:        c.FormValue("name"),
+		DmpId:         c.FormValue("id"),
 		Format:        c.FormValue("format"),
 		MainDeck:      strings.Split(c.FormValue("mainDeck"), ","),
 		HyperSpatial:  strings.Split(c.FormValue("hyperSpatial"), ","),
@@ -42,6 +42,6 @@ func CreateRace(c echo.Context) (*model.Deck, error) {
 		Time:          time.Now(),
 	}
 	key := datastore.NewKey(ctx, "Deck", "", 0, nil)
-	_, err := datastore.Put(ctx, key, model)
-	return model, err
+	datastore.Put(ctx, key, model)
+	return c.JSON(http.StatusOK, "")
 }

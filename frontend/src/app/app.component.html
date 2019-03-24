@@ -14,7 +14,7 @@
     </mat-form-field>
   </div>
   <div class="add-card">
-    <app-components-card-search></app-components-card-search>
+    <app-components-card-search (selected)="cardSelect($event)"></app-components-card-search>
     <mat-form-field class="number">
       <mat-label>枚数</mat-label>
       <mat-select [(value)]="selectedNumber">

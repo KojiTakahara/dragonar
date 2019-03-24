@@ -1,6 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, Input } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 @Component({
     selector: 'app-components-card-search',
@@ -11,10 +18,11 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponentsCardSearchComponent implements OnInit {
 
     myControl = new FormControl();
-    options: string[] = [];
-    private postUrl = 'http://localhost:8080/api/v1/card/search';
+    value = '';
+    options: any[] = [];
+    private postUrl = '/api/v1/card/search';
 
-    @ViewChild('input') input: ElementRef;
+    @Output('selected') selectedEmitter = new EventEmitter();
 
     constructor(private http: HttpClient) { }
 
@@ -26,5 +34,10 @@ export class AppComponentsCardSearchComponent implements OnInit {
         this.http.post(this.postUrl, formData).subscribe((res: any) => {
             this.options = res;
         });
+    }
+
+    select(ev: MatAutocompleteSelectedEvent) {
+        this.value = ev.option.value.Name;
+        this.selectedEmitter.emit(ev.option);
     }
 }
