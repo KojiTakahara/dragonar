@@ -5,6 +5,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Platform } from '@angular/cdk/platform';
 import { MatOption } from '@angular/material';
 import { forkJoin } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -52,7 +53,7 @@ export class AppComponent implements OnInit {
   @ViewChild(AppComponentsCardSearchComponent) searchInput: AppComponentsCardSearchComponent;
 
   constructor(
-    private platform: Platform,
+    public platform: Platform,
     private sanitizer: DomSanitizer,
     private http: HttpClient) {}
 
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit {
       this.numbers.push(i + 1);
     }
   }
-  
+
   cardSelect(ev: MatOption) {
     switch (ev.value.Type) {
       case 'サイキック・クリーチャー':
@@ -82,7 +83,7 @@ export class AppComponent implements OnInit {
   }
 
   add() {
-    const cardName = this.searchInput.value;
+    const cardName = this.searchInput.input.nativeElement.value;
     if (!cardName) {
       return;
     }
@@ -114,6 +115,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  drop(event: CdkDragDrop<string[]>, list) {
+    moveItemInArray(list, event.previousIndex, event.currentIndex);
+  }
+
   remove(card: CardInfo, zone: string) {
     switch (zone) {
       case 'main':
@@ -143,7 +148,7 @@ export class AppComponent implements OnInit {
     const formData = this.createFormData();
     forkJoin(
       this.http.post(url, formData, requestOptions),
-      this.http.post("/api/v1/deck", formData)
+      this.http.post('/api/v1/deck', formData)
     ).subscribe(([res, res2]: any) => {
       const extension = this.platform.ANDROID || this.platform.IOS ? 'png' : 'pdf';
       const file: Blob = new Blob([res], {type: `application/${extension}`});
@@ -151,21 +156,21 @@ export class AppComponent implements OnInit {
       this.safeUrl = this.sanitizer.bypassSecurityTrustUrl(fileURL);
       this.loading = false;
     }, (error: HttpErrorResponse) => {
-      alert('エラーが発生しました')
+      alert('エラーが発生しました');
       this.loading = false;
     });
   }
 
   createFormData() {
     const formData = new FormData();
-    formData.append("name", this.name);
-    formData.append("nameKana", this.nameKana);
-    formData.append("id", this.dmpId);
-    formData.append("mainDeck", this.deckToString(this.main));
-    formData.append("hyperSpatial", this.deckToString(this.spatial));
-    formData.append("hyperGR", this.deckToString(this.gr));
-    formData.append("forbiddenStar", String(this.forbiddenStar));
-    formData.append("image", String(this.platform.ANDROID || this.platform.IOS));
+    formData.append('name', this.name);
+    formData.append('nameKana', this.nameKana);
+    formData.append('id', this.dmpId);
+    formData.append('mainDeck', this.deckToString(this.main));
+    formData.append('hyperSpatial', this.deckToString(this.spatial));
+    formData.append('hyperGR', this.deckToString(this.gr));
+    formData.append('forbiddenStar', String(this.forbiddenStar));
+    formData.append('image', String(this.platform.ANDROID || this.platform.IOS));
     return formData;
   }
 

@@ -4,6 +4,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -41,6 +42,7 @@ import {
 import { PlatformModule } from '@angular/cdk/platform';
 
 const materialModules = [
+  DragDropModule,
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,

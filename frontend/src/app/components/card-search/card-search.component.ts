@@ -1,8 +1,9 @@
 import {
     Component,
+    ElementRef,
     EventEmitter,
-    OnInit,
     Output,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -15,29 +16,30 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
     styleUrls: ['./card-search.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AppComponentsCardSearchComponent implements OnInit {
+export class AppComponentsCardSearchComponent {
 
     myControl = new FormControl();
     value = '';
     options: any[] = [];
     private postUrl = '/api/v1/card/search';
 
-    @Output('selected') selectedEmitter = new EventEmitter();
+    @ViewChild('input') input: ElementRef;
+    @Output() selected = new EventEmitter();
 
     constructor(private http: HttpClient) { }
 
-    ngOnInit() { }
-
     search(ev: any) {
-        const formData: FormData = new FormData();
-        formData.append('keyword', ev.target.value);
-        this.http.post(this.postUrl, formData).subscribe((res: any) => {
-            this.options = res;
-        });
+        setTimeout(() => {
+            const formData: FormData = new FormData();
+            formData.append('keyword', ev.target.value);
+            this.http.post(this.postUrl, formData).subscribe((res: any) => {
+                this.options = res;
+            });
+        }, 2000);
     }
 
     select(ev: MatAutocompleteSelectedEvent) {
         this.value = ev.option.value.Name;
-        this.selectedEmitter.emit(ev.option);
+        this.selected.emit(ev.option);
     }
 }
