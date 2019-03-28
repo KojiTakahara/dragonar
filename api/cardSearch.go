@@ -23,7 +23,7 @@ type Card struct {
 func Search(c echo.Context) error {
 	ctx := appengine.NewContext(c.Request())
 	client := urlfetch.Client(ctx)
-	urlStr := "https://dm.takaratomy.co.jp/card/search/"
+	urlStr := "https://dm.takaratomy.co.jp/library/card/search/"
 	contentType := "application/x-www-form-urlencoded"
 	form := url.Values{}
 	form.Add("keyword_name", "1")

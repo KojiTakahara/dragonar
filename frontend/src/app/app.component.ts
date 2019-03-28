@@ -32,6 +32,12 @@ export class AppComponent implements OnInit {
   spatialLength = 0;
   forbiddenStar = false;
 
+  teamSheet = false;
+  teamName = '';
+  seat = '';
+
+  dmgp = false;
+
   get disabled(): boolean {
     if (this.loading) {
       return this.loading;
@@ -171,6 +177,12 @@ export class AppComponent implements OnInit {
     formData.append('hyperGR', this.deckToString(this.gr));
     formData.append('forbiddenStar', String(this.forbiddenStar));
     formData.append('image', String(this.platform.ANDROID || this.platform.IOS));
+
+    formData.append('teamSheet', String(this.teamSheet));
+    formData.append('teamName', this.teamName);
+    formData.append('seat', this.seat);
+
+    formData.append('dmgp', String(this.dmgp));
     return formData;
   }
 

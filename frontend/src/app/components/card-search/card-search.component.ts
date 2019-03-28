@@ -21,6 +21,7 @@ export class AppComponentsCardSearchComponent {
     myControl = new FormControl();
     value = '';
     options: any[] = [];
+    processing = false;
     private postUrl = '/api/v1/card/search';
 
     @ViewChild('input') input: ElementRef;
@@ -29,13 +30,18 @@ export class AppComponentsCardSearchComponent {
     constructor(private http: HttpClient) { }
 
     search(ev: any) {
+        if (this.processing) {
+            return;
+        }
+        this.processing = true;
         setTimeout(() => {
             const formData: FormData = new FormData();
             formData.append('keyword', ev.target.value);
             this.http.post(this.postUrl, formData).subscribe((res: any) => {
                 this.options = res;
+                this.processing = false;
             });
-        }, 2000);
+        }, 1500);
     }
 
     select(ev: MatAutocompleteSelectedEvent) {

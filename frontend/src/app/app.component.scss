@@ -40,6 +40,21 @@ app-root {
         app-components-card-info {
             display: flex;
             cursor: move;
+            &:hover {
+                .mat-list-item-content {
+                    padding-left: 0px;
+                }
+                &:before {
+                    position: relative;
+                    font-family: 'Material Icons';
+                    content: 'drag_indicator';
+                    color: rgba(0,0,0,.26);
+                    top: 0px;
+                    bottom: 0px;
+                    right: 3px;
+                    margin: auto;
+                }
+            }
         }
         .cdk-drag-placeholder {
             opacity: 0.4; 
@@ -77,6 +92,31 @@ app-root {
         min-width: 20px !important;
         line-height: 6px !important;
         padding: 0 !important;
+    }
+    .mat-expansion-panel-header {
+        padding-left: 16px;
+        .mat-slide-toggle {
+            padding-bottom: 12px;
+        }
+        .mat-disabled {
+            opacity: 1;
+            label {
+                cursor: pointer !important;
+            }
+        }
+    }
+    .mat-expansion-panel-body {
+        display: grid;
+        grid-template-columns: 1fr 141px;
+        grid-template-rows: 38px;
+        padding-bottom: 24px;
+        .mat-button-toggle-group {
+            margin-left: 16px;
+            .mat-button-toggle-checked {
+                background-color: #f44336;
+                color: white;
+            }
+        }
     }
     .submit {
         padding: $defaultPadding 0;

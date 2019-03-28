@@ -65,6 +65,31 @@
       FORBIDDEN STAR ～世界最後の日～
     </mat-slide-toggle>
   </mat-card>
+
+  <mat-accordion>
+    <mat-expansion-panel (opened)="teamSheet = true" (closed)="teamSheet = false">
+      <mat-expansion-panel-header>
+        <mat-slide-toggle color="warn" [disabled]="true" [checked]="teamSheet">
+          チーム戦
+        </mat-slide-toggle>
+      </mat-expansion-panel-header>
+      <mat-form-field class="">
+        <input matInput placeholder="チーム名" (input)="teamName = $event.target.value">
+      </mat-form-field>
+      <mat-button-toggle-group appearance="legacy" (change)="seat = $event.value">
+        <mat-button-toggle value="A">A</mat-button-toggle>
+        <mat-button-toggle value="B">B</mat-button-toggle>
+        <mat-button-toggle value="C">C</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card style="margin-top: 3px;">
+    <mat-slide-toggle style="padding-top: 0px;"color="primary" (change)="dmgp = $event.checked">
+      DMGP8th
+    </mat-slide-toggle> 
+  </mat-card>
+
   <div class="submit">
     <button mat-raised-button color="primary"
       *ngIf="!safeUrl"

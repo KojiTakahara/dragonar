@@ -4,3 +4,6 @@ decksheet-api/.idea/
 go.sum
 vendor/
 dist/
+.vscode/
+.python-version
+.go-version
