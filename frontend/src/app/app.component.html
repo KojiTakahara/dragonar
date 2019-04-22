@@ -14,22 +14,9 @@
     </mat-form-field>
   </div>
   <div class="add-card">
-    <app-components-card-search (selected)="cardSelect($event)"></app-components-card-search>
-    <mat-form-field class="number">
-      <mat-label>枚数</mat-label>
-      <mat-select [(value)]="selectedNumber">
-        <mat-option *ngFor="let num of numbers" [value]="num">
-          {{num}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-container>
-      <button mat-raised-button class="zone-button" color="primary" *ngIf="zone === 'main'" (click)="changeZone()">デッキ</button>
-      <button mat-raised-button class="zone-button" color="accent" *ngIf="zone === 'gr'" (click)="changeZone()">超GR</button>
-      <button mat-raised-button class="zone-button" color="warn" *ngIf="zone === 'spatial'" (click)="changeZone()">超次元</button>
-    </ng-container>
-    <button mat-button class="add-button" (click)="add()">
-      <mat-icon>add</mat-icon>
+    <button mat-raised-button color="accent"
+      (click)="openDialog()">
+      <span>カード検索</span>
     </button>
   </div>
   <mat-card class="deck">
@@ -83,12 +70,6 @@
       </mat-button-toggle-group>
     </mat-expansion-panel>
   </mat-accordion>
-
-  <mat-card style="margin-top: 3px;">
-    <mat-slide-toggle style="padding-top: 0px;"color="primary" (change)="dmgp = $event.checked">
-      DMGP8th
-    </mat-slide-toggle> 
-  </mat-card>
 
   <div class="submit">
     <button mat-raised-button color="primary"

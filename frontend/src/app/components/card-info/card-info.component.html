@@ -3,7 +3,8 @@
         {{card.name}}
     </div>
     <button mat-mini-fab color="primary">
-        <mat-icon (click)="minus()">remove</mat-icon>
+        <mat-icon *ngIf="card.num !== 1" (click)="minus()">remove</mat-icon>
+        <mat-icon *ngIf="card.num === 1" (click)="minus()">clear</mat-icon>
     </button>
     <div class="number">
         {{card.num}}

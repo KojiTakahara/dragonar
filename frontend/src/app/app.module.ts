@@ -38,7 +38,8 @@ import 'hammerjs';
 
 import {
   AppComponentsCardInfoComponent,
-  AppComponentsCardSearchComponent
+  AppComponentsCardSearchComponent,
+  AppComponentsSearchDialogComponent
 } from './components';
 import { PlatformModule } from '@angular/cdk/platform';
 
@@ -85,7 +86,8 @@ const MY_DATE_FORMATS = {
 
 const COMPONETS = [
   AppComponentsCardInfoComponent,
-  AppComponentsCardSearchComponent
+  AppComponentsCardSearchComponent,
+  AppComponentsSearchDialogComponent
 ];
 
 @NgModule({
@@ -106,6 +108,9 @@ const COMPONETS = [
   exports: [
     MatDatepickerModule,
     ...COMPONETS
+  ],
+  entryComponents: [
+    AppComponentsSearchDialogComponent
   ],
   providers: [
     MatDatepickerModule,

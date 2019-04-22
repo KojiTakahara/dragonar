@@ -1,0 +1,32 @@
+app-components-search-dialog {
+	.mat-raised-button.mat-primary,
+	.mat-form-field {
+		width: 100%;
+	}
+	.mat-dialog-content {
+		max-height: 66%;
+	}
+	.button-field {
+		height: 40px;
+	}
+	.mat-progress-bar {
+		margin: 14px 0;
+	}
+	.not-items {
+		text-align: center;
+		padding: 26px;
+		font-size: 16px;
+	}
+	.mat-list-item-content {
+		padding: 0px !important;
+	}
+	.add-button {
+		min-width: 36px;
+		padding: 0px;
+		margin-right: 8px;
+	}
+	.mat-dialog-actions {
+		margin: 0px;
+		min-height: 10px;
+	}
+}

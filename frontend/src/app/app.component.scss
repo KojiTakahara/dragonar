@@ -4,7 +4,7 @@ $defaultPadding: 16px;
 app-root {
     h2 {
         margin-block-start: 0;
-        padding: 0.50em 0 0.50em 8px;
+        padding: 0.50em 0 0.50em 24px;
         background-color: #3f51b5;
         color: white;
         box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
@@ -13,19 +13,14 @@ app-root {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        margin: 8px;
+        margin: 0px 24px;
     }
     font-size: $defaultFontSize;
     .add-card {
-        display: grid;
-        grid-template-columns: 1fr 40px 60px 40px;
-        grid-template-rows: 45px;
-        padding-bottom: 1.25em;
-        app-components-card-search {
-            padding-right: 8px;
-            .mat-form-field {
-                width: 100%;
-            }
+        text-align: center;
+        padding-bottom: .15em;
+        button {
+            width: 100%;
         }
     }
     .number {

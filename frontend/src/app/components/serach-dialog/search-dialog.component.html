@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>カード検索</h2>
+<mat-form-field>
+	<input type="search" placeholder="カード名" matInput #input>
+</mat-form-field>
+<div class="button-field">
+	<button *ngIf="!loading" mat-raised-button color="primary" (click)="search()">
+		<span>検索</span>
+	</button>
+	<mat-progress-bar
+		*ngIf="loading"
+		[color]="'primary'"
+		[mode]="'indeterminate'">
+	</mat-progress-bar>
+</div>
+<mat-dialog-content class="mat-typography">
+	<mat-list role="list" *ngIf="0 < items.length">
+		<mat-list-item role="listitem" *ngFor="let item of items">
+			<button mat-button class="add-button" (click)="select.emit(item)">
+				<mat-icon>add</mat-icon>
+			</button>
+			{{item.Name}}
+		</mat-list-item>
+	</mat-list>
+	<div *ngIf="items.length === 0" class="not-items">
+		検索結果はありません
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close>閉じる</button>
+</mat-dialog-actions>
