@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"sync"
 
 	"github.com/KojiTakahara/dragonar/model"
 	"github.com/PuerkitoBio/goquery"
@@ -23,23 +24,35 @@ type Card struct {
 func Search(c echo.Context) error {
 	ctx := appengine.NewContext(c.Request())
 	client := urlfetch.Client(ctx)
-	urlStr := "https://dm.takaratomy.co.jp/library/card/search/"
+	urlStr := "https://dm.takaratomy.co.jp"
 	contentType := "application/x-www-form-urlencoded"
 	form := url.Values{}
-	form.Add("keyword_name", "1")
 	form.Add("keyword", c.FormValue("keyword"))
-	form.Add("packlist_1[]", getPacks(ctx))
 
 	cards := []*Card{}
-	resp, _ := client.Post(urlStr, contentType, bytes.NewBufferString(form.Encode()))
+	resp, _ := client.Post(urlStr+"/card/", contentType, bytes.NewBufferString(form.Encode()))
 	doc, _ := goquery.NewDocumentFromResponse(resp)
-	doc.Find(".cardDeatailContainer").Each(func(_ int, s *goquery.Selection) {
-		card := &Card{
-			Name: getCardName(s.Find(".card-title").Text()),
-			Type: getCardType(s.Find(".card-cost").Text()),
-		}
-		cards = append(cards, card)
+
+	// var mutex = &sync.Mutex{}
+	var wg sync.WaitGroup
+
+	doc.Find("#cardlist > ul > li").Each(func(index int, s *goquery.Selection) {
+		cardUrl, _ := s.Find("a").Attr("data-href")
+		wg.Add(1)
+		go func(url string) {
+			// mutex.Lock()
+			res, _ := client.Get(urlStr + url)
+			d, _ := goquery.NewDocumentFromResponse(res)
+			card := &Card{
+				Name: getCardName(d),
+				Type: getCardType(d),
+			}
+			cards = append(cards, card)
+			// mutex.Unlock()
+			wg.Done()
+		}(cardUrl)
 	})
+	wg.Wait()
 	return c.JSON(http.StatusOK, removeDuplicates(cards))
 }
 
@@ -54,13 +67,25 @@ func getPacks(ctx context.Context) string {
 	return sb.String()
 }
 
-func getCardName(name string) string {
+func getCardName(doc *goquery.Document) string {
+	name := ""
+	doc.Find(".cardname").Each(func(index int, s *goquery.Selection) {
+		if index == 0 {
+			name = s.Text()
+		}
+	})
 	trim := strings.TrimLeft(name, "\n")
 	return strings.Split(trim, "(")[0]
 }
 
-func getCardType(s string) string {
-	return strings.Split(s, "種類：")[1]
+func getCardType(doc *goquery.Document) string {
+	t := ""
+	doc.Find(".typetxt").Each(func(index int, s *goquery.Selection) {
+		if index == 0 {
+			t = s.Text()
+		}
+	})
+	return strings.Split(t, "(")[0]
 }
 
 func removeDuplicates(list []*Card) []*Card {
