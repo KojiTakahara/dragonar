@@ -53,6 +53,12 @@
     </mat-slide-toggle>
   </mat-card>
 
+  <mat-card style="margin-top: 2px; padding-top: 0px;">
+    <mat-slide-toggle color="primary" (change)="dmgp = $event.checked">
+      DMGP9thシート
+    </mat-slide-toggle>
+  </mat-card>
+
   <mat-accordion>
     <mat-expansion-panel (opened)="teamSheet = true" (closed)="teamSheet = false">
       <mat-expansion-panel-header>
