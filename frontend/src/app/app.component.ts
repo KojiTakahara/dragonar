@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   selectedNumber = 1;
   safeUrl: SafeUrl;
   loading = false;
-
   name = '';
   nameKana = '';
   dmpId = '';
@@ -31,7 +30,6 @@ export class AppComponent implements OnInit {
   spatial: CardInfo[] = [];
   spatialLength = 0;
   forbiddenStar = false;
-
   teamSheet = false;
   teamName = '';
   seat = '';
@@ -59,6 +57,10 @@ export class AppComponent implements OnInit {
   constructor(
     public platform: Platform,
     public dialog: MatDialog,
+    private sanitizer: DomSanitizer,
+    private http: HttpClient) {}
+
+  constructor(
     private sanitizer: DomSanitizer,
     private http: HttpClient) {}
 
