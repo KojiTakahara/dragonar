@@ -4,9 +4,11 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
   MatAutocompleteModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
   MatDatepickerModule,
@@ -18,12 +20,14 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,
   MatTableModule,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
 } from '@angular/material';
 import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
@@ -34,12 +38,16 @@ import 'hammerjs';
 
 import {
   AppComponentsCardInfoComponent,
-  AppComponentsCardSearchComponent
+  AppComponentsCardSearchComponent,
+  AppComponentsSearchDialogComponent
 } from './components';
+import { PlatformModule } from '@angular/cdk/platform';
 
 const materialModules = [
+  DragDropModule,
   MatAutocompleteModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
@@ -53,12 +61,15 @@ const materialModules = [
   MatMenuModule,
   MatMomentDateModule,
   MatNativeDateModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,
   MatTableModule,
-  MatSortModule
+  MatSortModule,
+  PlatformModule
 ];
 
 const MY_DATE_FORMATS = {
@@ -75,7 +86,8 @@ const MY_DATE_FORMATS = {
 
 const COMPONETS = [
   AppComponentsCardInfoComponent,
-  AppComponentsCardSearchComponent
+  AppComponentsCardSearchComponent,
+  AppComponentsSearchDialogComponent
 ];
 
 @NgModule({
@@ -96,6 +108,9 @@ const COMPONETS = [
   exports: [
     MatDatepickerModule,
     ...COMPONETS
+  ],
+  entryComponents: [
+    AppComponentsSearchDialogComponent
   ],
   providers: [
     MatDatepickerModule,

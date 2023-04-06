@@ -1,14 +1,15 @@
 <mat-form-field>
-    <input type="text"
+    <input type="search"
         placeholder="カード名"
         matInput
+        [value]="value"
         [formControl]="myControl"
         [matAutocomplete]="auto"
-        (keyup.enter)="search($event)"
+        (keyup)="search($event)"
         #input>
-    <mat-autocomplete #auto="matAutocomplete">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
         <mat-option *ngFor="let option of options" [value]="option">
-            {{option}}
+            {{option.Name}}
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

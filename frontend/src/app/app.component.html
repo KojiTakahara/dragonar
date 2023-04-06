@@ -1,4 +1,4 @@
-<h1>GENERATE DM DECKSHEET!!</h1>
+<h2>GENERATE DM DECKSHEET!!</h2>
 <form>
   <div>
     <mat-form-field class="">
@@ -14,57 +14,89 @@
     </mat-form-field>
   </div>
   <div class="add-card">
-    <app-components-card-search></app-components-card-search>
-    <mat-form-field class="number">
-      <mat-label>枚数</mat-label>
-      <mat-select [(value)]="selectedNumber">
-        <mat-option *ngFor="let num of numbers" [value]="num">
-          {{num}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-container>
-      <button mat-raised-button class="zone-button" color="primary" *ngIf="zone === 'main'" (click)="changeZone()">デッキ</button>
-      <button mat-raised-button class="zone-button" color="accent" *ngIf="zone === 'gr'" (click)="changeZone()">超GR</button>
-      <button mat-raised-button class="zone-button" color="warn" *ngIf="zone === 'spatial'" (click)="changeZone()">超次元</button>
-    </ng-container>
-    <button mat-button class="add-button" (click)="add()">
-      <mat-icon>add</mat-icon>
+    <button mat-raised-button color="accent"
+      (click)="openDialog()">
+      <span>カード検索</span>
     </button>
   </div>
   <mat-card class="deck">
     <div>デッキリスト<span>：{{mainLength}}枚</span></div>
-    <mat-list role="list">
+    <mat-list role="list" cdkDropList (cdkDropListDropped)="drop($event, main)">
       <app-components-card-info *ngFor="let item of main"
         [card]="item"
         (change)="mainLength = mainLength + $event"
-        (remove)="remove(item, 'main')">
+        (remove)="remove(item, 'main')"
+        cdkDrag>
       </app-components-card-info>
     </mat-list>
     <div>超GRゾーン<span>：{{grLength}}枚</span></div>
-    <mat-list role="list">
+    <mat-list role="list" cdkDropList (cdkDropListDropped)="drop($event, gr)">
       <app-components-card-info *ngFor="let item of gr"
         [card]="item"
         (change)="grLength = grLength + $event"
-        (remove)="remove(item, 'gr')">
+        (remove)="remove(item, 'gr')"
+        cdkDrag>
       </app-components-card-info>
     </mat-list>
     <div>超次元ゾーン<span>：{{spatialLength}}枚</span></div>
-    <mat-list role="list" class="spatial">
+    <mat-list role="list" class="spatial" cdkDropList (cdkDropListDropped)="drop($event, spatial)">
       <app-components-card-info *ngFor="let item of spatial"
         [card]="item"
-        (change)="spatialLength = spatialLength + $event"
-        (remove)="remove(item, 'spatial')">
+        (change)="spatialLenAgth = spatialLength + $event"
+        (remove)="remove(item, 'spatial')"
+        cdkDrag>
       </app-components-card-info>
     </mat-list>
     <mat-divider></mat-divider>
-    <mat-slide-toggle color="accent">
+    <mat-slide-toggle color="accent" (change)="forbiddenStar = $event.checked">
       FORBIDDEN STAR ～世界最後の日～
     </mat-slide-toggle>
   </mat-card>
+
+  <mat-card style="margin-top: 2px; padding-top: 0px;">
+    <mat-slide-toggle color="primary" (change)="dmgp = $event.checked">
+      DMGP9thシート
+    </mat-slide-toggle>
+  </mat-card>
+
+  <mat-accordion>
+    <mat-expansion-panel (opened)="teamSheet = true" (closed)="teamSheet = false">
+      <mat-expansion-panel-header>
+        <mat-slide-toggle color="warn" [disabled]="true" [checked]="teamSheet">
+          チーム戦
+        </mat-slide-toggle>
+      </mat-expansion-panel-header>
+      <mat-form-field class="">
+        <input matInput placeholder="チーム名" (input)="teamName = $event.target.value">
+      </mat-form-field>
+      <mat-button-toggle-group appearance="legacy" (change)="seat = $event.value">
+        <mat-button-toggle value="A">A</mat-button-toggle>
+        <mat-button-toggle value="B">B</mat-button-toggle>
+        <mat-button-toggle value="C">C</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-expansion-panel>
+  </mat-accordion>
+
   <div class="submit">
-    <button mat-raised-button color="primary" [disabled]="disabled" (click)="submit()">
-      出力
+    <button mat-raised-button color="primary"
+      *ngIf="!safeUrl"
+      [disabled]="disabled"
+      (click)="submit()">
+      <span *ngIf="!loading">出力</span>
+      <mat-progress-bar
+        *ngIf="loading"
+        [color]="'primary'"
+        [mode]="'indeterminate'">
+      </mat-progress-bar>
     </button>
+    <a mat-raised-button color="accent" download="decksheet.{{platform.ANDROID || platform.IOS ? 'png' : 'pdf'}}"
+      *ngIf="safeUrl"
+      [href]="safeUrl"
+      (click)="safeUrl = ''">
+      ダウンロード
+    </a>
   </div>
 </form>
+<footer>
+  Author:<a href="https://twitter.com/dm_plateau" target="_blank">@dm_plateau</a>
+</footer>
